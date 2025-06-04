@@ -1,12 +1,12 @@
-from rest_framework import generics, status
-from rest_framework.response import Response
-from django.shortcuts import get_object_or_404, redirect
-from .models import ShortLink, ClickStat
-from .serializers import ShortLinkSerializer, ShortLinkStatsSerializer
-from rest_framework.views import APIView
-from rest_framework.permissions import IsAuthenticated
-from django.utils import timezone
 from django.db.models import Count
+from django.shortcuts import get_object_or_404, redirect
+from rest_framework import generics, status
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from .models import ShortLink, ClickStat
+from .serializers import ShortLinkSerializer
 
 
 class RedirectView(APIView):
@@ -34,6 +34,7 @@ class CreateShortLinkView(generics.CreateAPIView):
                 'data': serializer.data
             }, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class ListShortLinksView(generics.ListAPIView):
     serializer_class = ShortLinkSerializer
